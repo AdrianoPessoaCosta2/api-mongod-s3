@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: mons_db
+
+aws:
+  access-key-id: test
+  secret-access-key: test
+  region: us-east-1
+  s3:
+    bucket-name: bucket_s3
