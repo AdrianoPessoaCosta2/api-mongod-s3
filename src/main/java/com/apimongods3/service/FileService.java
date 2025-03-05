@@ -30,11 +30,11 @@ public class FileService {
         String fileName = UUID.randomUUID() + ".csv";
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket("bucket_s3")
+                    .bucket("bucket-s3")
                     .key(fileName)
                     .build();
             s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
-            return s3Client.utilities().getUrl(b -> b.bucket("bucket_s3").key(fileName)).toString();
+            return s3Client.utilities().getUrl(b -> b.bucket("bucket-s3").key(fileName)).toString();
         } catch (IOException e) {
             throw new RuntimeException("Erro ao fazer upload para S3", e);
         }
@@ -44,7 +44,7 @@ public class FileService {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
 
         ResponseInputStream<GetObjectResponse> s3Response = s3Client.getObject(GetObjectRequest.builder()
-                .bucket("bucket_s3") // Substitua pelo nome do seu bucket
+                .bucket("bucket-s3")
                 .key(fileName)
                 .build());
 
@@ -54,7 +54,7 @@ public class FileService {
             String[] fields = line.split(",");
             if (fields.length >= 2) {
                 FileRecord record = new FileRecord(fields[0], fields[1]);
-                mongoRepoitory.save(record);  // Salvando no MongoDB
+                mongoRepoitory.save(record);
             }
         });
         try {
